@@ -15,7 +15,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          script: cd "lynarx.ts"
+          script: |
+                  cd lynarx.ts
                   pm2 stop bot
                   pm2 delete bot
                   git pull
