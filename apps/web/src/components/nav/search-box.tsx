@@ -65,7 +65,7 @@ export function SearchBox() {
                 stroke="currentColor"
                 fill="currentColor"
                 className="animate-spin"
-                stroke-width="0"
+                strokeWidth="0"
                 version="1.1"
                 viewBox="0 0 16 16"
                 height="1em"
