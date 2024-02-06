@@ -1,0 +1,23 @@
+name: Deploy to Amazon EC2
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using private key
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: cd lynarx.ts/
+                  pm2 stop bot
+                  pm2 delete bot
+                  git pull
+                  pnpm install
+                  pm2 start pnpm --name "bot" --time --  bot dev
