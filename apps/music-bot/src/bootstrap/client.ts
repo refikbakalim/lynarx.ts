@@ -1,26 +1,31 @@
-import { Client } from 'discord.js';
-import { HooksRegistry, Symbols } from '#bot/hooks/registry';
+import { Client } from "discord.js";
+import { HooksRegistry, Symbols } from "#bot/hooks/registry";
 import {
-  ClientIntents,
-  CommandsPath,
-  EventsPath,
-  ValidationsPath,
-} from '#bot/utils/constants';
-import { CommandKit } from 'commandkit';
+	ClientIntents,
+	ClientPartials,
+	CommandsPath,
+	EventsPath,
+	ValidationsPath,
+	DevIds,
+} from "#bot/utils/constants";
+import { CommandKit } from "commandkit";
 
 const client = new Client({
-  intents: ClientIntents,
+	intents: ClientIntents,
+	partials: ClientPartials,
 });
 
 HooksRegistry.set(Symbols.kClient, client);
 
 const commandkit = new CommandKit({
-  client,
-  bulkRegister: false,
-  commandsPath: CommandsPath,
-  eventsPath: EventsPath,
-  skipBuiltInValidations: true,
-  validationsPath: ValidationsPath,
+	client,
+	bulkRegister: true,
+	commandsPath: CommandsPath,
+	eventsPath: EventsPath,
+	skipBuiltInValidations: false,
+	validationsPath: ValidationsPath,
+	devUserIds: DevIds.users,
+	devGuildIds: DevIds.guilds,
 });
 
 export { client, commandkit };
