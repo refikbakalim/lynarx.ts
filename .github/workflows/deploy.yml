@@ -3,6 +3,8 @@ name: Deploy to Amazon EC2
 on:
   push:
     branches: [master]
+    paths-ignore: 
+      - 'apps/web/*'
 
 jobs:
   deploy:
