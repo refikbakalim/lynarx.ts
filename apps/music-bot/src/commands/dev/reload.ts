@@ -46,7 +46,7 @@ export const data: CommandData = {
 };
 
 export async function run({ interaction, client, handler }: SlashCommandProps) {
-	await interaction.deferReply();
+	await interaction.deferReply({ ephemeral: true });
 
 	if (interaction.options.getSubcommand() === "events") {
 		await handler.reloadEvents();

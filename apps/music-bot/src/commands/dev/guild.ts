@@ -16,7 +16,10 @@ export async function run({ interaction, client }: SlashCommandProps) {
 		.findOne({ id: interaction.guildId })
 		.catch(() => null);
 
-	return interaction.reply(`\`\`\`${guild}\`\`\``);
+	return interaction.reply({
+		content: `\`\`\`${guild}\`\`\``,
+		ephemeral: true,
+	});
 }
 
 export const options: CommandOptions = {

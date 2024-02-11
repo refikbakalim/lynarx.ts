@@ -1,12 +1,9 @@
-import {
-	CommandType,
-	type CommandData,
-	type ContextMenuCommandProps,
-} from "commandkit";
+import { type CommandData, type ContextMenuCommandProps } from "commandkit";
+import { ApplicationCommandType } from "discord.js";
 
 export const data: CommandData = {
 	name: "Get Avatar",
-	type: CommandType.User,
+	type: ApplicationCommandType.User,
 };
 
 export async function run({ interaction, client }: ContextMenuCommandProps) {

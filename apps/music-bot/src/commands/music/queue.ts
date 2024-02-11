@@ -1,27 +1,25 @@
-import { PaginatedMessage } from "@sapphire/discord.js-utilities";
 import type { CommandData, SlashCommandProps } from "commandkit";
-import { useQueue, useHistory } from "discord-player";
+import { useQueue } from "discord-player";
+import { PaginatedMessage } from "@sapphire/discord.js-utilities";
 
 export const data: CommandData = {
-	name: "history",
-	description: "Display the queue history",
+	name: "queue",
+	description: "Get song queue",
 };
 
 export async function run({ interaction }: SlashCommandProps) {
 	if (!interaction.inCachedGuild()) return;
 
 	const queue = useQueue(interaction.guild!.id);
-	const history = useHistory(interaction.guild!.id);
 
 	if (!queue)
 		return interaction.reply({
 			content: `I am **not** in a voice channel`,
 			ephemeral: true,
 		});
-
-	if (!history?.tracks)
+	if (!queue.tracks || !queue.currentTrack)
 		return interaction.reply({
-			content: `There is **no** queue history to **display**`,
+			content: `There is **no** queue to **display**`,
 			ephemeral: true,
 		});
 
@@ -29,10 +27,9 @@ export async function run({ interaction }: SlashCommandProps) {
 
 	if (pagesNum <= 0) pagesNum = 1;
 
-	const tracks = history.tracks.map(
+	const tracks = queue.tracks.map(
 		(track, idx) => `**${++idx})** [${track.title}](${track.url})`
 	);
-
 	const paginatedMessage = new PaginatedMessage();
 
 	if (pagesNum > 25) pagesNum = 25;
@@ -44,13 +41,13 @@ export async function run({ interaction }: SlashCommandProps) {
 			embed
 				.setColor("Red")
 				.setDescription(
-					`**Queue history** for **session** in **${queue.channel
+					`**Queue** for **session** in **${queue.channel
 						?.name}:**\n${
 						list === ""
 							? "\n*• No more queued tracks*"
 							: `\n${list}`
 					}
-						\n`
+						\n**Now Playing:** [${queue.currentTrack?.title}](${queue.currentTrack?.url})\n`
 				)
 				.setFooter({
 					text: `${queue.tracks.size} track(s) in queue`,

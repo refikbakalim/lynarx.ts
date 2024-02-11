@@ -78,7 +78,10 @@ export async function run({ interaction, client }: SlashCommandProps) {
 		...(status && { status }),
 	});
 
-	return interaction.reply(`Changed bot presence.`);
+	return interaction.reply({
+		content: `Changed bot presence.`,
+		ephemeral: true,
+	});
 }
 
 export const options: CommandOptions = {

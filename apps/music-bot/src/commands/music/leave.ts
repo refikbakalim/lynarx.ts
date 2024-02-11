@@ -1,34 +1,25 @@
-import { EmbedGenerator } from '#bot/utils/EmbedGenerator';
-import type { CommandData, SlashCommandProps } from 'commandkit';
-import { useQueue } from 'discord-player';
+import type { CommandData, SlashCommandProps } from "commandkit";
+import { useQueue } from "discord-player";
 
 export const data: CommandData = {
-  name: 'leave',
-  description: 'Disconnect the bot',
+	name: "leave",
+	description: "Disconnect the bot",
 };
 
 export async function run({ interaction }: SlashCommandProps) {
-  if (!interaction.inCachedGuild()) return;
+	if (!interaction.inCachedGuild()) return;
 
-  await interaction.deferReply();
+	const queue = useQueue(interaction.guildId);
 
-  const queue = useQueue(interaction.guildId);
+	if (!queue)
+		return interaction.reply({
+			content: `I am **not** in a voice channel`,
+			ephemeral: true,
+		});
 
-  if (!queue) {
-    const embed = EmbedGenerator.Error({
-      title: 'Not playing',
-      description: 'I am not playing anything right now',
-    }).withAuthor(interaction.user);
+	queue.delete();
 
-    return interaction.editReply({ embeds: [embed] });
-  }
-
-  queue.delete();
-
-  const embed = EmbedGenerator.Success({
-    title: 'Disconnected!',
-    description: 'I have successfully left the voice channel.',
-  }).withAuthor(interaction.user);
-
-  return interaction.editReply({ embeds: [embed] });
+	return interaction.reply({
+		content: `I have **successfully disconnected** from the voice channel`,
+	});
 }
