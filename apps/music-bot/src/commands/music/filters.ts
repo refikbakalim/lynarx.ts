@@ -4,7 +4,7 @@ import { ApplicationCommandOptionType } from "discord.js";
 
 export const data: CommandData = {
 	name: "filter",
-	description: "The FFmpeg filters that can be applied to tracks",
+	description: "Apply FFmpeg filters to tracks",
 	options: [
 		{
 			name: "filter",
@@ -29,7 +29,6 @@ export const data: CommandData = {
 
 export async function run({ interaction }: SlashCommandProps) {
 	if (!interaction.inCachedGuild()) return;
-	await interaction.deferReply();
 
 	const queue = useQueue(interaction.guildId);
 	const filter = interaction.options.getString("filter") as
@@ -37,22 +36,25 @@ export async function run({ interaction }: SlashCommandProps) {
 		| "Off";
 
 	if (!queue)
-		return interaction.editReply({
+		return interaction.reply({
 			content: `I am **not** in a voice channel`,
+			ephemeral: true,
 		});
 	if (!queue.currentTrack)
-		return interaction.editReply({
+		return interaction.reply({
 			content: `There is no track **currently** playing`,
+			ephemeral: true,
 		});
 
 	if (!queue.filters.ffmpeg)
-		return interaction.editReply({
+		return interaction.reply({
 			content: `The FFmpeg filters are **not available** to be used in this queue`,
+			ephemeral: true,
 		});
 
 	if (filter === "Off") {
 		await queue.filters.ffmpeg.setFilters(false);
-		return interaction.editReply({
+		return interaction.reply({
 			content: `**Audio** filter has been **disabled**`,
 		});
 	}
@@ -61,7 +63,7 @@ export async function run({ interaction }: SlashCommandProps) {
 		filter.includes("bassboost") ? ["bassboost", "normalizer"] : filter
 	);
 
-	return interaction.editReply({
+	return interaction.reply({
 		content: `**${filter}** filter has been **${
 			queue.filters.ffmpeg.isEnabled(filter) ? "enabled" : "disabled"
 		}**`,

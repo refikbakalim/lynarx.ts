@@ -27,6 +27,12 @@ export async function run({ interaction }: SlashCommandProps) {
 			ephemeral: true,
 		});
 
+	if (!queue.tracks)
+		return interaction.reply({
+			content: `There is **nothing** to clear`,
+			ephemeral: true,
+		});
+
 	const size = queue?.size;
 
 	queue.tracks.clear();

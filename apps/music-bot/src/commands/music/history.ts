@@ -1,4 +1,3 @@
-import { EmbedGenerator } from "#bot/utils/EmbedGenerator";
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
 import type { CommandData, SlashCommandProps } from "commandkit";
 import { useQueue, useHistory } from "discord-player";
@@ -41,15 +40,22 @@ export async function run({ interaction }: SlashCommandProps) {
 	for (let i = 0; i < pagesNum; i++) {
 		const list = tracks.slice(i * 5, i * 5 + 5).join("\n");
 
-		const embed = EmbedGenerator.Info({
-			description: `**Queue history** for **session** in **${queue.channel
-				?.name}:**\n${
-				list === "" ? "\n*• No more queued tracks*" : `\n${list}`
-			}
-						\n`,
-		});
-
-		paginatedMessage.addPageEmbed(embed);
+		paginatedMessage.addPageEmbed((embed) =>
+			embed
+				.setColor("Red")
+				.setDescription(
+					`**Queue history** for **session** in **${queue.channel
+						?.name}:**\n${
+						list === ""
+							? "\n*• No more queued tracks*"
+							: `\n${list}`
+					}
+						\n`
+				)
+				.setFooter({
+					text: `${queue.tracks.size} track(s) in queue`,
+				})
+		);
 	}
 
 	return paginatedMessage.run(interaction);

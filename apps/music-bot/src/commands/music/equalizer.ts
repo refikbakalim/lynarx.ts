@@ -25,24 +25,26 @@ export const data: CommandData = {
 
 export async function run({ interaction }: SlashCommandProps) {
 	if (!interaction.inCachedGuild()) return;
-	await interaction.deferReply();
 
 	const queue = useQueue(interaction.guildId);
 	const filter = interaction.options.getString("filter");
 
 	if (!queue)
-		return interaction.editReply({
+		return interaction.reply({
 			content: `I am **not** in a voice channel`,
+			ephemeral: true,
 		});
 
 	if (!queue.currentTrack)
-		return interaction.editReply({
+		return interaction.reply({
 			content: `There is no track **currently** playing`,
+			ephemeral: true,
 		});
 
 	if (!queue.filters.equalizer)
-		return interaction.editReply({
+		return interaction.reply({
 			content: `The equalizer filter is **not available** to be used in this queue`,
+			ephemeral: true,
 		});
 
 	let value;
@@ -67,5 +69,5 @@ export async function run({ interaction }: SlashCommandProps) {
 		description: `I have successfully **enabled** ${filter} filter.`,
 	}).withAuthor(interaction.user);
 
-	return interaction.editReply({ embeds: [embed] });
+	return interaction.reply({ embeds: [embed] });
 }

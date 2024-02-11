@@ -10,36 +10,28 @@ export const data: CommandData = {
 export async function run({ interaction }: SlashCommandProps) {
 	if (!interaction.inCachedGuild()) return;
 
-	await interaction.deferReply();
-
 	const queue = useQueue(interaction.guild!.id);
 	const history = useHistory(interaction.guildId);
 
 	if (!queue) {
-		const embed = EmbedGenerator.Error({
-			title: "Error",
-			description: "I am **not** in a voice channel",
-		}).withAuthor(interaction.user);
-
-		return interaction.editReply({ embeds: [embed] });
+		return interaction.reply({
+			content: `I am **not** in a voice channel`,
+			ephemeral: true,
+		});
 	}
 
 	if (!history) {
-		const embed = EmbedGenerator.Error({
-			title: "Error",
-			description: "There is **no** **history**",
-		}).withAuthor(interaction.user);
-
-		return interaction.editReply({ embeds: [embed] });
+		return interaction.reply({
+			content: `There is **no** **history**`,
+			ephemeral: true,
+		});
 	}
 
 	if (history.isEmpty()) {
-		const embed = EmbedGenerator.Error({
-			title: "Error",
-			description: "There is **no** previous track in the **history**",
-		}).withAuthor(interaction.user);
-
-		return interaction.editReply({ embeds: [embed] });
+		return interaction.reply({
+			content: `There is **no** previous track in the **history**`,
+			ephemeral: true,
+		});
 	}
 
 	await history.previous();
@@ -49,5 +41,5 @@ export async function run({ interaction }: SlashCommandProps) {
 		description: "🔁 | I am **replaying** the previous track",
 	}).withAuthor(interaction.user);
 
-	return interaction.editReply({ embeds: [embed] });
+	return interaction.reply({ embeds: [embed] });
 }
