@@ -48,9 +48,6 @@ export async function run({ interaction }: SlashCommandProps) {
       nodeOptions: {
         metadata: PlayerMetadata.create(interaction),
         volume: playerOptions.volume,
-        repeatMode: QueueRepeatMode[
-          playerOptions.loopMode
-        ] as unknown as QueueRepeatMode,
         a_filter: playerOptions.filters as ('8D' | 'Tremolo' | 'Vibrato')[],
         equalizer: playerOptions.equalizer.map((eq, i) => ({
           band: i,

@@ -17,15 +17,20 @@ const client = new Client({
 
 HooksRegistry.set(Symbols.kClient, client);
 
-const commandkit = new CommandKit({
+const cleanDevUsers = DevIds.users?.filter(id => id.trim().length > 0) ?? [];
+const cleanDevGuilds = DevIds.guilds?.filter(id => id.trim().length > 0) ?? [];
+
+const options: ConstructorParameters<typeof CommandKit>[0] = {
 	client,
 	bulkRegister: true,
 	commandsPath: CommandsPath,
 	eventsPath: EventsPath,
 	skipBuiltInValidations: false,
 	validationsPath: ValidationsPath,
-	devUserIds: DevIds.users,
-	devGuildIds: DevIds.guilds,
-});
+	...(cleanDevUsers.length > 0 ? { devUserIds: cleanDevUsers } : {}),
+	...(cleanDevGuilds.length > 0 ? { devGuildIds: cleanDevGuilds } : {}),
+};
+
+const commandkit = new CommandKit(options);
 
 export { client, commandkit };

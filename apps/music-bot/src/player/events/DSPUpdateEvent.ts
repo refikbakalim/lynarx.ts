@@ -4,9 +4,9 @@ import { PlayerMetadata } from '../PlayerMetadata.js';
 import { useDatabase } from '#bot/hooks/useDatabase';
 
 export default class DSPUpdateEvent
-  implements PlayerEvent<typeof GuildQueueEvent.dspUpdate>
+  implements PlayerEvent<typeof GuildQueueEvent.DSPUpdate>
 {
-  public name = GuildQueueEvent.dspUpdate;
+  public name = GuildQueueEvent.DSPUpdate;
 
   public async execute(
     queue: GuildQueue<PlayerMetadata>,

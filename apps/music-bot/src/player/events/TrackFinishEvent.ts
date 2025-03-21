@@ -5,9 +5,9 @@ import { PlayerMetadata } from '../PlayerMetadata.js';
 import { io } from '#bot/web/index';
 
 export default class TrackFinishEvent
-  implements PlayerEvent<typeof GuildQueueEvent.playerFinish>
+  implements PlayerEvent<typeof GuildQueueEvent.PlayerFinish>
 {
-  public name = GuildQueueEvent.playerFinish;
+  public name = GuildQueueEvent.PlayerFinish;
 
   public async execute(
     queue: GuildQueue<PlayerMetadata>,
