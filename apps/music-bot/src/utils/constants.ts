@@ -1,7 +1,7 @@
 import { GatewayIntentBits, Partials } from "discord.js";
 import { getDirname } from "./location.js";
 import { join } from "node:path";
-import type { ExtractorLoaderOptionDict } from "discord-player";
+import { QueueRepeatMode } from 'discord-player';
 
 export const ClientIntents = [
 	GatewayIntentBits.Guilds,
@@ -38,25 +38,16 @@ export const EmbedColor = {
 	Info: 0x00bfaf,
 } as const;
 
-export const DiscordPlayerOptions: DiscordPlayerConfig = {
-	extractorConfig: {
-		YouTubeExtractor: {},
-		SoundCloudExtractor: {},
-		AppleMusicExtractor: {},
-		SpotifyExtractor: {},
-		VimeoExtractor: {},
-		ReverbnationExtractor: {},
-		AttachmentExtractor: {},
-	},
-	disableSources: [],
-};
-
-type DiscordPlayerConfig = {
-	extractorConfig: ExtractorLoaderOptionDict;
-	disableSources: (keyof ExtractorLoaderOptionDict)[];
-};
-
 export const DevIds = {
 	users: [process.env.DEV_USER_ID!],
 	guilds: [process.env.DEV_GUILD_ID!],
 };
+
+export const loopModes = [
+	QueueRepeatMode.OFF,
+	QueueRepeatMode.TRACK,
+	QueueRepeatMode.QUEUE,
+	QueueRepeatMode.AUTOPLAY,
+  ];
+  
+  export const loopModeLabels = ['OFF', 'TRACK', 'QUEUE', 'AUTOPLAY'];

@@ -11,7 +11,7 @@ export async function run({ interaction }: SlashCommandProps) {
 	if (!interaction.inCachedGuild()) return;
 
 	const node = usePlayer(interaction.guildId)!;
-	const timeline = useTimeline(interaction.guildId);
+	const timeline = useTimeline({node: interaction.guildId});
 
 	// this will also verify if usePlayer's value is null
 	if (!timeline?.track) {

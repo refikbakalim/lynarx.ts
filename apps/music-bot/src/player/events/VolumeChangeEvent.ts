@@ -5,9 +5,9 @@ import { useDatabase } from '#bot/hooks/useDatabase';
 import { io } from '#bot/web/index';
 
 export default class VolumeChangeEvent
-  implements PlayerEvent<typeof GuildQueueEvent.volumeChange>
+  implements PlayerEvent<typeof GuildQueueEvent.VolumeChange>
 {
-  public name = GuildQueueEvent.volumeChange;
+  public name = GuildQueueEvent.VolumeChange;
 
   public async execute(
     queue: GuildQueue<PlayerMetadata>,

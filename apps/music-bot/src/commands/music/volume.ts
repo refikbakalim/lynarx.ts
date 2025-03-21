@@ -21,7 +21,7 @@ export const data: CommandData = {
 export async function run({ interaction }: SlashCommandProps) {
 	if (!interaction.inCachedGuild()) return;
 
-	const timeline = useTimeline(interaction.guildId);
+	const timeline = useTimeline({node: interaction.guildId});
 
 	if (!timeline?.track) {
 		return interaction.reply({

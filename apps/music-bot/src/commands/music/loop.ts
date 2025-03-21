@@ -3,6 +3,7 @@ import { EmbedGenerator } from "#bot/utils/EmbedGenerator";
 import type { CommandData, SlashCommandProps } from "commandkit";
 import { QueueRepeatMode, useQueue } from "discord-player";
 import { ApplicationCommandOptionType } from "discord.js";
+import { loopModes, loopModeLabels } from '#bot/utils/constants';
 
 export const data: CommandData = {
 	name: "loop",
@@ -46,11 +47,11 @@ export async function run({ interaction }: SlashCommandProps) {
 	const mode = interaction.options.getInteger("mode", false);
 
 	if (mode != null) {
-		queue.setRepeatMode(mode);
+		queue.setRepeatMode(loopModes[mode]);
 
 		const embed = EmbedGenerator.Success({
 			title: "Repeat mode changed",
-			description: `I have successfully changed the repeat mode to \`${QueueRepeatMode[mode]}\``,
+			description: `I have successfully changed the repeat mode to \`${loopModeLabels[mode]}\``,
 		}).withAuthor(interaction.user);
 
 		await interaction.reply({ embeds: [embed] });
@@ -73,7 +74,7 @@ export async function run({ interaction }: SlashCommandProps) {
 	const embed = EmbedGenerator.Success({
 		title: "Repeat mode",
 		description: `The current repeat mode is \`${
-			QueueRepeatMode[queue.repeatMode]
+			queue.repeatMode
 		}\`.`,
 	}).withAuthor(interaction.user);
 

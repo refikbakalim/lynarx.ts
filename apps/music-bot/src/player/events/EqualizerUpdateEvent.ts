@@ -6,9 +6,9 @@ import { io } from '#bot/web/index';
 import type { EqualizerBand } from '#bot/web/actions/equalizer.action';
 
 export default class EqualizerUpdateEvent
-  implements PlayerEvent<typeof GuildQueueEvent.equalizerUpdate>
+  implements PlayerEvent<typeof GuildQueueEvent.EqualizerUpdate>
 {
-  public name = GuildQueueEvent.equalizerUpdate;
+  public name = GuildQueueEvent.EqualizerUpdate;
 
   public async execute(
     queue: GuildQueue<PlayerMetadata>,

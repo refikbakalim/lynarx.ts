@@ -1,4 +1,4 @@
-import { QueueRepeatMode, useMainPlayer, useQueue } from 'discord-player';
+import { useMainPlayer, useQueue } from 'discord-player';
 import { SocketUser } from '../socket.js';
 import type { Socket } from 'socket.io';
 import { PlayerMetadata } from '#bot/player/PlayerMetadata';
@@ -27,9 +27,6 @@ export async function PlayAction(
       queue = player.nodes.create(guild, {
         metadata: new PlayerMetadata({ channel }),
         volume: playerOptions.volume,
-        repeatMode: QueueRepeatMode[
-          playerOptions.loopMode
-        ] as unknown as QueueRepeatMode,
         a_filter: playerOptions.filters as ('8D' | 'Tremolo' | 'Vibrato')[],
         equalizer: playerOptions.equalizer.map((eq, i) => ({
           band: i,

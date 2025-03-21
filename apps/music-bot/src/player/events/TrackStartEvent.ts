@@ -2,13 +2,12 @@ import { GuildQueue, GuildQueueEvent, Track } from 'discord-player';
 import { EmbedGenerator } from '#bot/utils/EmbedGenerator';
 import { PlayerEvent } from '../common/types.js';
 import { PlayerMetadata } from '../PlayerMetadata.js';
-import { socketInfo } from '#bot/web/socket';
 import { io } from '#bot/web/index';
 
 export default class TrackStartEvent
-  implements PlayerEvent<typeof GuildQueueEvent.playerStart>
+  implements PlayerEvent<typeof GuildQueueEvent.PlayerStart>
 {
-  public name = GuildQueueEvent.playerStart;
+  public name = GuildQueueEvent.PlayerStart;
 
   public async execute(
     queue: GuildQueue<PlayerMetadata>,
