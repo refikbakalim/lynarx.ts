@@ -74,7 +74,7 @@ export async function run({ interaction }: SlashCommandProps) {
 	const embed = EmbedGenerator.Success({
 		title: "Repeat mode",
 		description: `The current repeat mode is \`${
-			queue.repeatMode
+			loopModeLabels[queue.repeatMode]
 		}\`.`,
 	}).withAuthor(interaction.user);
 
